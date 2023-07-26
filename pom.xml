@@ -20,6 +20,7 @@
     <modules>
         <module>cinema-domain</module>
 		<module>cinema-application</module>
+		<module>cinema-infra</module>
 	</modules>
 
 </project>
