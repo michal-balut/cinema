@@ -19,6 +19,7 @@
 
     <modules>
         <module>cinema-domain</module>
-    </modules>
+		<module>cinema-application</module>
+	</modules>
 
 </project>

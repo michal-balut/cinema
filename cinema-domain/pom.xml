@@ -12,6 +12,5 @@
 
 	<groupId>pl.spring.training.cinema</groupId>
 	<artifactId>cinema-domain</artifactId>
-	<version>1.0-SNAPSHOT</version>
 
 </project>
