@@ -21,6 +21,7 @@ public class CinemaConfiguration {
 		return new CreateReservationCommandHandler(seanceService);
 	}
 
+	@Bean
 	public ReserveSeatsCommandHandler reserveSeatsCommandHandler(SeanceService seanceService) {
 		return new ReserveSeatsCommandHandler(seanceService);
 	}
