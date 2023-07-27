@@ -15,5 +15,5 @@ Accept: application/json
 {
   "seanceId": "123abc",
   "reservationNumber": "resNumber",
-  "chosenSeats": [1, 2, 3, 4]
+  "chosenSeats": [1, 2, 3]
 }
