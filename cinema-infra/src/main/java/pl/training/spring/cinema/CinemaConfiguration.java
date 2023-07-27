@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import pl.spring.training.cinema.domain.seance.SeanceRepository;
 import pl.training.spring.cinema.application.api.commands.CreateReservationCommandHandler;
 import pl.training.spring.cinema.application.api.commands.ReserveSeatsCommandHandler;
+import pl.training.spring.cinema.application.seance.ReservationUuidGenerator;
 import pl.training.spring.cinema.application.seance.SeanceService;
 
 @Configuration
@@ -13,7 +14,7 @@ public class CinemaConfiguration {
 
 	@Bean
 	public SeanceService seanceService(SeanceRepository repository) {
-		return new SeanceService(repository);
+		return new SeanceService(repository, new ReservationUuidGenerator());
 	}
 
 	@Bean

@@ -5,13 +5,13 @@ import pl.spring.training.cinema.domain.reservation.ReservationNumber;
 import pl.spring.training.cinema.domain.user.User;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Seance {
 
     private final String id;
 
-    private final Map<ReservationNumber, Reservation> reservations = new HashMap<>(Map.of(new ReservationNumber(
-        "resNumber"), new Reservation(new ReservationNumber("resNumber"), new User("a@p.pl"))));
+    private final Map<ReservationNumber, Reservation> reservations = new HashMap<>();
 
     private final List<Seat> seats;
 
@@ -22,22 +22,22 @@ public class Seance {
         this.seats = new ArrayList<>(seats);
     }
 
-    public void addReservation(User user) {
-        var reservationNumber = /*generatpor*/ new ReservationNumber("resNumber");
+    public void addReservation(User user, String uuid) {
+        var reservationNumber = /*generatpor*/ new ReservationNumber(uuid);
         reservations.put(reservationNumber, new Reservation(reservationNumber, user));
     }
 
     public void reserveSeats(ReservationNumber resNumber, List<Integer> chosenSeats) {
         var currentReservation = findReservation(resNumber)
-            .orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+            .orElseThrow(() -> new ReservationNotFoundException(String.format("Reservation with number: %s not found", resNumber)));
         var availableChosenSeats = seats.stream()
             .filter(Seat::isAvailable)
             .filter(seat -> chosenSeats.contains(seat.getNumber()))
             .toList();
 
         if (availableChosenSeats.size() != chosenSeats.size()) {
-            //var availableSeatsNumbers = availableChosenSeats.stream().map(Seat::getNumber).collect(Collectors.toList());
-            throw new SeatsNotAvailableException(""/* print unavailable seats numbers*/);
+            chosenSeats.removeAll(availableChosenSeats.stream().map(seat -> seat.number).toList());
+            throw new SeatsNotAvailableException(String.format("Seats: %s are not available!", chosenSeats));
         }
         availableChosenSeats.forEach(Seat::reserve);
         currentReservation.reserveSeats(chosenSeats);
