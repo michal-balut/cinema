@@ -8,17 +8,12 @@ Accept: application/json
 }
 
 ###
-
-POST http://localhost:8080/cards/fees
+POST http://localhost:8080/seance/reserve
 Content-Type: application/json
 Accept: application/json
 
 {
-  "cardNumber": "1234567890123456"
+  "seanceId": "123abc",
+  "reservationNumber": "resNumber",
+  "chosenSeats": [1, 2, 3, 4]
 }
-
-###
-
-GET http://localhost:8080/cards/1234567890123456/transactions
-Content-Type: application/json
-Accept: application/json

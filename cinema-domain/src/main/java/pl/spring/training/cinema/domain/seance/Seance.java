@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import pl.spring.training.cinema.domain.reservation.Reservation;
 import pl.spring.training.cinema.domain.reservation.ReservationNumber;
@@ -27,7 +26,7 @@ public class Seance {
 	}
 
 	public void addReservation(User user) {
-		var reservationNumber = /*generatpor*/ new ReservationNumber("");
+		var reservationNumber = /*generatpor*/ new ReservationNumber("resNumber");
 		reservations.put(reservationNumber, new Reservation(reservationNumber, user));
 	}
 
