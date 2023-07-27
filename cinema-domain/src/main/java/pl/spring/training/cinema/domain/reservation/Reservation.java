@@ -2,21 +2,22 @@ package pl.spring.training.cinema.domain.reservation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 import pl.spring.training.cinema.domain.user.User;
 
 public class Reservation {
 
-	private final ReservationNumber number;
+	private ReservationNumber number;
 
-	private final User user;
+	private User user;
 
-	private final List<Integer> reservedSeats = new ArrayList<>();
+	private List<Integer> reservedSeats = new ArrayList<>();
 
 	private ReservationStatus status;
 
-	private final List<Consumer<ReservationStateChangedEvent>> eventListeners = new ArrayList<>();
+	public Reservation() {
+		// needed for mapstruct
+	}
 
 	public Reservation(final ReservationNumber number, final User user) {
 		this.number = number;
@@ -30,6 +31,23 @@ public class Reservation {
 		status = ReservationStatus.SEATS_CHOSEN;
 	}
 
+	public ReservationNumber getNumber() {
+		return number;
+	}
 
+	public User getUser() {
+		return user;
+	}
 
+	public List<Integer> getReservedSeats() {
+		return reservedSeats;
+	}
+
+	public ReservationStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(final ReservationStatus status) {
+		this.status = status;
+	}
 }

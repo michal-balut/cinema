@@ -1,25 +1,29 @@
 package pl.spring.training.cinema.domain.seance;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import pl.spring.training.cinema.domain.reservation.Reservation;
 import pl.spring.training.cinema.domain.reservation.ReservationNumber;
 import pl.spring.training.cinema.domain.user.User;
-
-import java.util.*;
 
 public class Seance {
 
     private final String id;
 
-    private final Map<ReservationNumber, Reservation> reservations = new HashMap<>(Map.of(new ReservationNumber(
-        "resNumber"), new Reservation(new ReservationNumber("resNumber"), new User("a@p.pl"))));
+    private final Map<ReservationNumber, Reservation> reservations;
 
     private final List<Seat> seats;
 
     private final SeatIsAvailableSpecification seatIsAvailableSpecification = new SeatIsAvailableSpecification();
 
-    public Seance(final String id, List<Seat> seats) {
+    public Seance(final String id, List<Seat> seats, Map<ReservationNumber, Reservation> reservations) {
         this.id = id;
         this.seats = new ArrayList<>(seats);
+		this.reservations = new HashMap<>(reservations);
     }
 
     public void addReservation(User user) {

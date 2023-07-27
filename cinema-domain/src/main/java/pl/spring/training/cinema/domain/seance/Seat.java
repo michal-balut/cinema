@@ -2,9 +2,9 @@ package pl.spring.training.cinema.domain.seance;
 
 public class Seat {
 
-    int number;
+    private int number;
 
-    boolean available;
+    private boolean available;
 
     public int getNumber() {
         return number;
@@ -14,9 +14,21 @@ public class Seat {
         return available;
     }
 
-    public void reserve() {
+	public void setNumber(final int number) {
+		this.number = number;
+	}
+
+	public void setAvailable(final boolean available) {
+		this.available = available;
+	}
+
+	public void reserve() {
         available = false;
     }
+
+	public Seat() {
+		//needed for mapstruct
+	}
 
     public Seat(final int number, final boolean available) {
         this.number = number;
