@@ -16,11 +16,13 @@ public class SeanceService {
         this.uuidGenerator = uuidGenerator;
 	}
 
-	public void createReservation(String seanceId, User user) {
+	public String createReservation(String seanceId, User user) {
 		var currentSeance = seanceRepository.findById(seanceId).orElseThrow(() -> new SeanceNotFoundException(
             String.format("Seance with id %s was not found", seanceId)));
-		currentSeance.addReservation(user, uuidGenerator.getNext());
+        final String uuid = uuidGenerator.getNext();
+        currentSeance.addReservation(user, uuid);
 		seanceRepository.save(currentSeance);
+        return uuid;
 	}
 
 	public void reserveSeats(String seanceId, ReservationNumber reservationNumber, List<Integer> chosenSeats) {
