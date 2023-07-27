@@ -26,22 +26,22 @@ public class Seance {
 		this.reservations = new HashMap<>(reservations);
     }
 
-    public void addReservation(User user) {
-        var reservationNumber = /*generatpor*/ new ReservationNumber("resNumber");
+    public void addReservation(User user, String uuid) {
+        var reservationNumber = /*generatpor*/ new ReservationNumber(uuid);
         reservations.put(reservationNumber, new Reservation(reservationNumber, user));
     }
 
     public void reserveSeats(ReservationNumber resNumber, List<Integer> chosenSeats) {
         var currentReservation = findReservation(resNumber)
-            .orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+            .orElseThrow(() -> new ReservationNotFoundException(String.format("Reservation with number: %s not found", resNumber)));
         var availableChosenSeats = seats.stream()
             .filter(Seat::isAvailable)
             .filter(seat -> chosenSeats.contains(seat.getNumber()))
             .toList();
 
         if (availableChosenSeats.size() != chosenSeats.size()) {
-            //var availableSeatsNumbers = availableChosenSeats.stream().map(Seat::getNumber).collect(Collectors.toList());
-            throw new SeatsNotAvailableException(""/* print unavailable seats numbers*/);
+            chosenSeats.removeAll(availableChosenSeats.stream().map(Seat::getNumber).toList());
+            throw new SeatsNotAvailableException(String.format("Seats: %s are not available!", chosenSeats));
         }
         availableChosenSeats.forEach(Seat::reserve);
         currentReservation.reserveSeats(chosenSeats);

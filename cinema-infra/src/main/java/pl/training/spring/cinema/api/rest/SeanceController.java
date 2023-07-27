@@ -1,11 +1,14 @@
 package pl.training.spring.cinema.api.rest;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.training.spring.cinema.application.api.commands.CreateReservationCommandHandler;
 import pl.training.spring.cinema.application.api.commands.ReserveSeatsCommandHandler;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("seance")
@@ -17,10 +20,10 @@ public class SeanceController {
     private final RestReservationMapper restReservationMapper;
 
     @PostMapping()
-    public ResponseEntity<Void> createReservation(@RequestBody CreateReservationDto createReservationDto) {
+    public ResponseEntity<String> createReservation(@RequestBody @Valid CreateReservationDto createReservationDto) {
         var createReservationCommand = restReservationMapper.toDomain(createReservationDto);
-        createReservationCommandHandler.handle(createReservationCommand);
-        return ResponseEntity.status(HttpStatusCode.valueOf(201)).build();
+        String reservationNumber = createReservationCommandHandler.handle(createReservationCommand);
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body("Created reservation with number: " + reservationNumber);
     }
 
     @PostMapping("reserve")

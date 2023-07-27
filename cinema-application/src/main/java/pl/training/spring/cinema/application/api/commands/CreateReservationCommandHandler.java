@@ -10,7 +10,7 @@ public class CreateReservationCommandHandler {
 		this.seanceService = seanceService;
 	}
 
-	public void handle(CreateReservationCommand command) {
-		seanceService.createReservation(command.seanceId(), command.user());
+	public String handle(CreateReservationCommand command) {
+		return seanceService.createReservation(command.seanceId(), command.user());
 	}
 }
