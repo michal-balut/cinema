@@ -31,4 +31,12 @@ public class SeanceService {
 		currentSeance.reserveSeats(reservationNumber, chosenSeats);
 		seanceRepository.save(currentSeance);
 	}
+
+	public void payForReservation(String seanceId, ReservationNumber reservationNumber) {
+		var currentSeance = seanceRepository.findById(seanceId).orElseThrow(() -> new SeanceNotFoundException(
+				String.format("Seance with id %s was not found", seanceId)));
+		// @FIXME inject payment operation delegation to external provider
+		currentSeance.markAsPaid(reservationNumber);
+		seanceRepository.save(currentSeance);
+	}
 }

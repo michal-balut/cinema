@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import pl.spring.training.cinema.domain.reservation.Reservation;
 import pl.spring.training.cinema.domain.reservation.ReservationNumber;
+import pl.spring.training.cinema.domain.reservation.ReservationPaidEvent;
+import pl.spring.training.cinema.domain.reservation.ReservationStatus;
 import pl.spring.training.cinema.domain.user.User;
 
 public class Seance {
@@ -19,6 +22,8 @@ public class Seance {
     private final List<Seat> seats;
 
     private final SeatIsAvailableSpecification seatIsAvailableSpecification = new SeatIsAvailableSpecification();
+
+	private final List<Consumer<ReservationPaidEvent>> eventListeners = new ArrayList<>();
 
     public Seance(final String id, List<Seat> seats, Map<ReservationNumber, Reservation> reservations) {
         this.id = id;
@@ -46,6 +51,21 @@ public class Seance {
         availableChosenSeats.forEach(Seat::reserve);
         currentReservation.reserveSeats(chosenSeats);
     }
+
+	public void markAsPaid(ReservationNumber resNumber) {
+		var currentReservation = findReservation(resNumber)
+				.orElseThrow(() -> new ReservationNotFoundException(String.format("Reservation with number: %s not found", resNumber)));
+		currentReservation.setStatus(ReservationStatus.PAYMENT_COMPLETED);
+		publishEvent(new ReservationPaidEvent(id, currentReservation.getNumber()));
+	}
+
+	private void publishEvent(ReservationPaidEvent event) {
+		eventListeners.forEach(listener -> listener.accept(event));
+	}
+
+	public void addEventsListener(Consumer<ReservationPaidEvent> listener) {
+		eventListeners.add(listener);
+	}
 
     private Optional<Reservation> findReservation(ReservationNumber number) {
         return Optional.ofNullable(reservations.get(number));
