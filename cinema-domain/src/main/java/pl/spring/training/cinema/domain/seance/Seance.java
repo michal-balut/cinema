@@ -33,11 +33,11 @@ public class Seance {
 
 	public void reserveSeats(ReservationNumber resNumber, List<Integer> chosenSeats) {
 		var currentReservation = findReservation(resNumber)
-				.orElseThrow(() -> new RuntimeException("Reservation not found")); // @FIXME add custom
+				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		var availableChosenSeats = seats.stream()
 				.filter(Seat::isAvailable)
 				.filter(seat -> chosenSeats.contains(seat.getNumber()))
-				.collect(Collectors.toList());
+				.toList();
 
 		if (availableChosenSeats.size() != chosenSeats.size()) {
 			//var availableSeatsNumbers = availableChosenSeats.stream().map(Seat::getNumber).collect(Collectors.toList());

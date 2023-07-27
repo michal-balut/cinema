@@ -1,0 +1,24 @@
+POST http://localhost:8080/seance
+Content-Type: application/json
+Accept: application/json
+
+{
+  "seanceId": "123abc",
+  "email": "a@p.pl"
+}
+
+###
+
+POST http://localhost:8080/cards/fees
+Content-Type: application/json
+Accept: application/json
+
+{
+  "cardNumber": "1234567890123456"
+}
+
+###
+
+GET http://localhost:8080/cards/1234567890123456/transactions
+Content-Type: application/json
+Accept: application/json

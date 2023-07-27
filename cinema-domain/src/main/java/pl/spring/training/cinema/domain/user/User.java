@@ -1,6 +1,4 @@
 package pl.spring.training.cinema.domain.user;
 
-public class User {
-
-	String email;
-}
+public record User(String email) {
+};
