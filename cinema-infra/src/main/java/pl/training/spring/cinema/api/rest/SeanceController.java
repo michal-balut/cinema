@@ -26,14 +26,14 @@ public class SeanceController {
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body("Created reservation with number: " + reservationNumber);
     }
 
-    @PostMapping("reserve")
+    @PutMapping("reservation")
     public ResponseEntity<Void> reserveSeats(@RequestBody ReserveSeatsDto reserveSeatsDto) {
         var reserveSeatsCommand = restReservationMapper.toDomain(reserveSeatsDto);
         reserveSeatsCommandHandler.handle(reserveSeatsCommand);
         return ResponseEntity.status(HttpStatusCode.valueOf(200)).build();
     }
 
-    @PostMapping("pay")
+    @PutMapping("payment")
     public ResponseEntity<Void> payForReservation(@RequestBody PayForReservationDto payForReservationDto) {
         var payForReservationCommand = restReservationMapper.toDomain(payForReservationDto);
         payForReservationCommandHandler.handle(payForReservationCommand);
