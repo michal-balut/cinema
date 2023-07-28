@@ -48,7 +48,8 @@ public class SeanceService {
 	}
 
 	private void publishApplicationEvent(ReservationPaidEvent domainEvent) {
-		var applicationEvent = new ReservationPaidApplicationEvent(domainEvent.seanceId(), domainEvent.number());
+		var applicationEvent = new ReservationPaidApplicationEvent(domainEvent.seanceId(), domainEvent.number().value(), domainEvent.seats(),
+            domainEvent.email());
 		seanceApplicationEventsPublisher.publish(applicationEvent);
 	}
 }

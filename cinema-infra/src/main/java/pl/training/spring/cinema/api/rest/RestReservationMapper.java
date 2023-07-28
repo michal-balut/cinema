@@ -4,8 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import pl.spring.training.cinema.domain.reservation.ReservationNumber;
 import pl.spring.training.cinema.domain.user.User;
-import pl.training.spring.cinema.application.api.commands.CreateReservationCommand;
-import pl.training.spring.cinema.application.api.commands.ReserveSeatsCommand;
+import pl.training.spring.cinema.application.api.commands.*;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
@@ -17,4 +16,6 @@ public interface RestReservationMapper {
 
     @Mapping(target = "reservationNumber", expression = "java(new ReservationNumber(reserveSeatsDto.getReservationNumber()))")
     ReserveSeatsCommand toDomain(ReserveSeatsDto reserveSeatsDto);
+
+    PayForReservationCommand toDomain(PayForReservationDto payForReservationDto);
 }

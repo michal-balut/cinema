@@ -14,6 +14,16 @@ Accept: application/json
 
 {
   "seanceId": "123abc",
-  "reservationNumber": "resNumber",
+  "reservationNumber": "0ce7c433-5f90-4589-b19c-4c70cd4b3694",
   "chosenSeats": [1, 2, 3]
+}
+
+###
+POST http://localhost:8080/seance/pay
+Content-Type: application/json
+Accept: application/json
+
+{
+  "seanceId": "123abc",
+  "reservationNumber": "0ce7c433-5f90-4589-b19c-4c70cd4b3694"
 }

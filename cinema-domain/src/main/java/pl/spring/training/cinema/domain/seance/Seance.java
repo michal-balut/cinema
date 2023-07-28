@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import pl.spring.training.cinema.domain.reservation.Reservation;
 import pl.spring.training.cinema.domain.reservation.ReservationNumber;
@@ -56,7 +57,8 @@ public class Seance {
 		var currentReservation = findReservation(resNumber)
 				.orElseThrow(() -> new ReservationNotFoundException(String.format("Reservation with number: %s not found", resNumber)));
 		currentReservation.setStatus(ReservationStatus.PAYMENT_COMPLETED);
-		publishEvent(new ReservationPaidEvent(id, currentReservation.getNumber()));
+		publishEvent(new ReservationPaidEvent(id, currentReservation.getNumber(), seats.stream().map(Seat::getNumber).collect(
+            Collectors.toList()), currentReservation.getUser().email()));
 	}
 
 	private void publishEvent(ReservationPaidEvent event) {
